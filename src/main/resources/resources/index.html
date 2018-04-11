@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title></title>
+    <link rel="stylesheet" href="css\bootstrap.css">
+</head>
+
+<body>
+	<div class="container" id = "myContainer">
+	
+		<div class="input-group mb-3">
+		  <div class="col-sm-12 alert alert-info" id="toDo">
+		    <p><font color="blue"><strong>使用说明</strong>：谷歌，edge，火狐浏览器正常使用。</p>
+		  	<p><font color="black">1.题目出现后，在你要<strong>答题的页面</strong>点击F12（不是本页面），点击Console或者控制台，复制输入以下代码</p>
+			
+			
+			<div class="input-group mb-3">
+			<textarea id="biao1" rows="5" class="form-control">
+				$(".W_fl").append("<span id='divMsg' style='position:  absolute;margin-left: 180px;display: none;' >");let msgDiv=$("#divMsg");msgDiv.text("请控制交卷时间在30s之后，否则会被系统检测！");msgDiv.css({"border":"3px solid blue"});msgDiv.css({"color":"#0ef"});msgDiv.fadeIn();let index=0;let elemLi=$(".w_charu li");let length=elemLi.length;let i=0;oneti();function oneti(){if(i<length){var e=elemLi[i];var tm=$(e).find("h1 .w_fz18:eq(2)").text();getAns(tm,e);++i}else{countX()}}let w_btn_tab_down=$(".w_btn_tab_down");function getAns(tm,e){let ans=[];var url="http://202.194.67.116:8083/subject/getTitleAndAnswerByTitle";var param={subjectTitle:tm};$.ajax({url:url,data:param,dataType:"jsonp",jsonpCallback:"success_jsonpCallback"+index++,jsonp:"callback",context:document.body,success:function(data){if(data!=null&&data.optionStringList!=null){for(opele of data.optionStringList){ans.push(opele)}ans.forEach(a=>{let aa=$(e).find("div:contains("+a+")").map(function(){if($(this).text().substring(2)==a){return this}});let bb=$(aa).find("label");let cc=$(bb).find("input");$(cc).click()});gzzrClick()}else{gzzrClick()}}})}function gzzrClick(){clientXArr.push(gzzrRdm(540,620));clientXArrY.push(gzzrRdm(530,550));w_btn_tab_down.click();oneti()}function gzzrRdm(min,max){return Math.floor((Math.random()*(max-min+1)+min))}function countX(){var obj={},arr=clientXArr,maxArr=[];for(var i=0,len=arr.length;i<len;i++){if(obj[arr[i]]){obj[arr[i]]++;maxArr.push(obj[arr[i]])}else{obj[arr[i]]=1}}maxArr=maxArr.sort(function(x,y){return x-y});repeatX=maxArr.length>0?maxArr[maxArr.length-1]:0}
+			</textarea>
+			<input class="btn btn-light" type="button" onClick="copyUrl2()" value="点击复制代码" />
+		  	</div>
+		  	<p><font color="black">2.点击回车或者运行，“<strong>自动答题</strong>”</p>
+		  	<p><font color="black">3.但是会有两个题<strong>没有答案</strong>，将该题目的部分内容输入到“<strong>一部分题目</strong>”框中手动查询</p>
+		  </div>
+		</div>
+		
+		<div class="input-group mb-3">
+		  <div class="input-group-prepend">
+		    <span class="input-group-text" id="basic-addon2">输入一部分题目</span>
+		  </div>
+		  <input type="text" class="form-control" id="partTitle" placeholder="一部分题目" aria-label="Username" aria-describedby="basic-addon1">
+		  <button type="button" class="btn btn-info btn-lg" onclick="surepart()">查询</button>
+		</div>
+		
+		<div class="row" id = "youContainer">
+		  <div class="col-sm-1 alert alert-dark">序号</div>
+		  <div class="col-sm-6 alert alert-info">题目</div>
+		  <div class="col-sm-1 alert alert-warning">答案</div>
+		  <div class="col-sm-4 alert alert-primary">选项</div>
+		</div>
+		
+		<div id = "lastContainer">
+		</div>
+		
+	</div>
+	
+    <script type="text/javascript" src="js\jquery-3.2.1.min.js"></script>
+    <script type="text/javascript" src="js\jquery.form.js"></script>
+    <script type="text/javascript" src="js\vue.js"></script>
+    <script type="text/javascript" src="js\bootstrap.js"></script>
+    <script type="text/javascript" src="js\zfes.ajax.js"></script>
+    <script type="text/javascript" src="js\zfes.util.js"></script>
+    <script type="text/javascript">
+ 
+	    function copyUrl2()
+	    {
+	    var Url2=document.getElementById("biao1");
+	    Url2.select(); // 选择对象
+	    document.execCommand("Copy"); // 执行浏览器复制命令
+	    alert("已复制好，可贴粘。");
+	    }
+    
+        //一部分题目
+        function surepart() {
+        	var partTitle = $("#partTitle").val();
+        	var url = "../subject/getTitleByPartTitle";
+        	var param = {
+        			partTitle : partTitle
+        	};
+            var callback = function(data) {
+            	for(e of data){
+            		getGzzr(e,function(){},1);
+            	}
+            }
+        	zfesAjax.ajax(url, param, callback);
+        }
+        
+        //完整题目
+        function sure(){
+			var subjectTitle = $("#subjectTitle").val();
+			getGzzr(subjectTitle,function(){},1);
+        }
+        
+        //字符串解析
+        function surestring() {	
+        	var sumString = $("#sumString").val();
+        	if(zfesUtil.isEmpty(sumString)){
+        		console.log("输入为空");
+        	}
+        	var subjectInfo = sumString.split("yuzhouwudi*1");
+        	iflength = subjectInfo.length;
+        	ifindex = 0;
+			digui(subjectInfo);
+        }
+        
+        var iflength;
+    	var ifindex;
+        function digui(subjectInfo){
+        	if(iflength > 1){
+        		var subject = subjectInfo[ifindex].split("yuzhouwudi*2");
+        		let subjectid = subject[0];
+        		let subjectTitle = subject[1];
+        		--iflength;
+        		++ifindex;
+        		getGzzr(subjectTitle,function(){digui(subjectInfo)},2);
+        	}
+        }
+        
+        totalIndex = 1;
+        function getGzzr(subjectTitle,fn,tag) {
+        	var url = "../subject/getTitleAndAnswerByTitle";
+			var param = {
+        			subjectTitle : subjectTitle
+        	};
+			var callback = function(data) {
+				var myContainer = $("#lastContainer");
+				var youContainer = $("#youContainer");
+				var answer = "数据库没有该题目";
+				if(!zfesUtil.isEmpty(data) && !zfesUtil.isEmpty(data.answer)){
+					answer = data.answer;
+				} 
+				if(!zfesUtil.isEmpty(data) && !zfesUtil.isEmpty(data.subjectTitle)){
+					subjectTitle = data.subjectTitle;
+				} 
+	        	var strVar = "";
+	        	strVar += "<div class=\"row\">\n";
+	        	if(tag == 2){
+	        		strVar += "		  <div class=\"col-sm-1 alert alert-info\"><p>" + totalIndex + "<\/p><\/div>\n";
+		        	totalIndex++;  	
+	        	} else {
+	        		strVar += "		  <div class=\"col-sm-1 alert alert-info\"><p><\/p><\/div>\n";
+	        	}
+	        	strVar += "		  <div class=\"col-sm-6 alert alert-info\"><p>" + subjectTitle + "<\/p><\/div>\n";
+	        	strVar += "		  <div class=\"col-sm-1 alert alert-warning\"><p>" + answer + "<\/p><\/div>\n";
+	        	if(!zfesUtil.isEmpty(data) && !zfesUtil.isEmpty(data.optionStringList)){
+					strVar += "		  <div class=\"col-sm-4 alert alert-primary\">";
+					for(option of data.optionStringList) {
+						strVar += "<p>" + option + "<\/p>";
+					}
+					strVar += "<\/div>\n";
+				} else {
+					strVar += "		  <div class=\"col-sm-4 alert alert-primary\"><p><\/p><\/div>\n";
+				}
+	            strVar += "		<\/div>\n";
+	            if(tag == 2){
+	            	myContainer.before(strVar);	
+	            } else {
+	            	youContainer.after(strVar);	
+	            }
+	        	fn();
+			}
+	        zfesAjax.ajax(url, param, callback);
+        }
+        
+        $("#howTo").click(function(){
+        	  $("#toDo").slideToggle();
+        	});
+    </script>
+</body>
+
+</html>

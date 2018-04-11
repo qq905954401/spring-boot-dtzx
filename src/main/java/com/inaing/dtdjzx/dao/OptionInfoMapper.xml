@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.inaing.dtdjzx.dao.OptionInfoMapper" >
+  <resultMap id="BaseResultMap" type="com.inaing.dtdjzx.model.OptionInfo" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="subjectId" property="subjectid" jdbcType="BIGINT" />
+    <result column="optionTitle" property="optiontitle" jdbcType="VARCHAR" />
+    <result column="isRight" property="isright" jdbcType="INTEGER" />
+    <result column="optionType" property="optiontype" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, subjectId, optionTitle, isRight, optionType
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from optioninfo
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <select id="selectBySubjectId" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from optioninfo
+    where subjectId = #{subjectid,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from optioninfo
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.inaing.dtdjzx.model.OptionInfo" >
+    insert into optioninfo (id, subjectId, optionTitle, 
+      isRight, optionType)
+    values (#{id,jdbcType=BIGINT}, #{subjectid,jdbcType=BIGINT}, #{optiontitle,jdbcType=VARCHAR}, 
+      #{isright,jdbcType=INTEGER}, #{optiontype,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.inaing.dtdjzx.model.OptionInfo" >
+    insert into optioninfo
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="subjectid != null" >
+        subjectId,
+      </if>
+      <if test="optiontitle != null" >
+        optionTitle,
+      </if>
+      <if test="isright != null" >
+        isRight,
+      </if>
+      <if test="optiontype != null" >
+        optionType,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="subjectid != null" >
+        #{subjectid,jdbcType=BIGINT},
+      </if>
+      <if test="optiontitle != null" >
+        #{optiontitle,jdbcType=VARCHAR},
+      </if>
+      <if test="isright != null" >
+        #{isright,jdbcType=INTEGER},
+      </if>
+      <if test="optiontype != null" >
+        #{optiontype,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.inaing.dtdjzx.model.OptionInfo" >
+    update optioninfo
+    <set >
+      <if test="subjectid != null" >
+        subjectId = #{subjectid,jdbcType=BIGINT},
+      </if>
+      <if test="optiontitle != null" >
+        optionTitle = #{optiontitle,jdbcType=VARCHAR},
+      </if>
+      <if test="isright != null" >
+        isRight = #{isright,jdbcType=INTEGER},
+      </if>
+      <if test="optiontype != null" >
+        optionType = #{optiontype,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.inaing.dtdjzx.model.OptionInfo" >
+    update optioninfo
+    set subjectId = #{subjectid,jdbcType=BIGINT},
+      optionTitle = #{optiontitle,jdbcType=VARCHAR},
+      isRight = #{isright,jdbcType=INTEGER},
+      optionType = #{optiontype,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

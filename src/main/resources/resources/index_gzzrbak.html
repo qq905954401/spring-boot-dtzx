@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title></title>
+    <link rel="stylesheet" href="css\bootstrap.css">
+</head>
+
+<body>
+	<div class="container" id = "myContainer">
+	
+		<div class="input-group mb-3">
+		  <div class="col-sm-12 alert alert-info" id="toDo">
+		    <p><font color="blue"><strong>使用说明</strong>：谷歌，edge，火狐浏览器正常使用。答案ABCD和选项可能不一致，以<strong>选项</strong>为准</p>
+		  	<p><font color="black">1.题目出现后，在你要<strong>答题的页面</strong>点击F12（不是本页面），点击Console或者控制台，输入以下红色代码</p>
+		  	<p><font color="red">let sumString = "";for(e of JSON.parse(sessionStorage.getItem('allDatajingsai')).data.subjectInfoList){sumString  +=  e.id;sumString  += "yuzhouwudi*2";sumString  +=  e.subjectTitle;sumString  += "yuzhouwudi*1";}console.warn(sumString );</p>
+		  	<p><font color="black">2.点击回车，复制新打印出的代码，粘贴到“<strong>字符串解析框</strong>”</p>
+		  	<p><font color="black">3.当出现<strong>数据库没有该题</strong>的时候，将题目的部分内容输入到“<strong>一部分题目</strong>”框中查询</p>
+		  </div>
+		</div>
+		
+		<div class="input-group mb-3">
+		  <div class="input-group-prepend">
+		    <span class="input-group-text" id="basic-addon1">输入字符串解析</span>
+		  </div>
+		  <input type="text" class="form-control" id="sumString" placeholder="字符串解析框" aria-label="Username" aria-describedby="basic-addon1">
+		  <button type="button" class="btn btn-info btn-lg" onclick="surestring()">查询</button>
+		</div>
+		
+		<!-- <div class="input-group mb-3">
+		  <div class="input-group-prepend">
+		    <span class="input-group-text" id="basic-addon1">输入完整题目</span>
+		  </div>
+		  <input type="text" class="form-control" id="subjectTitle" placeholder="完整题目" aria-label="Username" aria-describedby="basic-addon1">
+		  <button type="button" class="btn btn-info btn-lg" onclick="sure()">确定</button>
+		</div> -->
+		
+		<div class="input-group mb-3">
+		  <div class="input-group-prepend">
+		    <span class="input-group-text" id="basic-addon2">输入一部分题目</span>
+		  </div>
+		  <input type="text" class="form-control" id="partTitle" placeholder="一部分题目" aria-label="Username" aria-describedby="basic-addon1">
+		  <button type="button" class="btn btn-info btn-lg" onclick="surepart()">查询</button>
+		</div>
+		
+		<div class="row" id = "youContainer">
+		  <div class="col-sm-1 alert alert-dark">序号</div>
+		  <div class="col-sm-6 alert alert-info">题目</div>
+		  <div class="col-sm-1 alert alert-warning">答案</div>
+		  <div class="col-sm-4 alert alert-primary">选项</div>
+		</div>
+		
+		<div id = "lastContainer">
+		</div>
+		
+	</div>
+	
+
+    
+    
+    
+    
+    
+    
+    <script type="text/javascript" src="js\jquery-3.2.1.min.js"></script>
+    <script type="text/javascript" src="js\jquery.form.js"></script>
+    <script type="text/javascript" src="js\vue.js"></script>
+    <script type="text/javascript" src="js\bootstrap.js"></script>
+    <script type="text/javascript" src="js\zfes.ajax.js"></script>
+    <script type="text/javascript" src="js\zfes.util.js"></script>
+    <script type="text/javascript">
+
+        /* window.setInterval("go()", 1000); */
+        
+       /*  list2(); */
+
+       /*  chapter2(); */
+        
+        function go() {
+            var url = "http://xxjs.dtdjzx.gov.cn/quiz-api/subject_info/randomList";
+            var param = {};
+            var callback = function(data) {
+                if(data.code == 200){
+                	for(var result of data.data.subjectInfoList){
+                	    save(result);
+                	}
+                }
+            }
+            zfesAjax.ajax(url, param, callback);
+        }
+        
+        function list() {
+            var url = "http://xxjs.dtdjzx.gov.cn/quiz-api/subject_info/list";
+            var param = {};
+            var callback = function(data) {
+            	console.log(data)
+                if(data.code == 200){
+                	let sumString2 = "";
+                	for(e of data.data.subjectInfoList){
+                		sumString2  +=  e.id;
+                		sumString2  += "yuzhouwudi*2";
+                		sumString2  +=  e.subjectTitle;
+                		sumString2  += "yuzhouwudi*1";
+                		}
+                		console.warn(sumString2 );
+                }
+            }
+            zfesAjax.ajax(url, param, callback);
+        }
+        
+        function list2() {
+            var url = "http://xxjs.dtdjzx.gov.cn/quiz-api/subject_info/list?chapterId=7gi1s8384sjaarvsc0m5hskjv2";
+            var param = {};
+            var callback = function(data) {
+            	console.log(data)
+                if(data.code == 200){
+                	let sumString2 = "";
+                	for(e of data.data.subjectInfoList){
+                		sumString2  +=  e.id;
+                		sumString2  += "yuzhouwudi*2";
+                		sumString2  +=  e.subjectTitle;
+                		sumString2  += "yuzhouwudi*1";
+                		}
+                		console.warn(sumString2 );
+                }
+            }
+            zfesAjax.ajax(url, param, callback);
+        }
+        
+        function chapter() {
+        	$.get("http://xxjs.dtdjzx.gov.cn/quiz-api/chapter_info/list",r=>{
+                if(r.code==200&&r.data.length>0){
+                    console.log(r);
+                }
+            });
+        }
+        
+        function chapter2() {
+        	$.get("http://xxjs.dtdjzx.gov.cn/quiz-api/subject_info/list?chapterId=qbqkfcn2fuihtqtnvo5t8e3mri",r=>{
+                if(r.code==200){
+                	for(var result of r.data.subjectInfoList){
+                	    save(result);
+                	}
+                }
+            });
+        }
+        
+        function save(data) {
+        	var url = "../subject/saveSubjectInfo";
+        	var param = data;
+        	param["optionLength"] = data.optionInfoList.length;
+            var callback = function(data) {
+            }
+        	zfesAjax.ajax(url, param, callback);
+        }
+        
+        //一部分题目
+        function surepart() {
+        	var partTitle = $("#partTitle").val();
+        	var url = "../subject/getTitleByPartTitle";
+        	var param = {
+        			partTitle : partTitle
+        	};
+            var callback = function(data) {
+            	for(e of data){
+            		console.log(e)
+            		getGzzr(e,function(){},1);
+            	}
+            }
+        	zfesAjax.ajax(url, param, callback);
+        }
+        
+        //完整题目
+        function sure(){
+			var subjectTitle = $("#subjectTitle").val();
+			getGzzr(subjectTitle,function(){},1);
+        }
+        
+        //字符串解析
+        function surestring() {	
+        	var sumString = $("#sumString").val();
+        	if(zfesUtil.isEmpty(sumString)){
+        		console.log("输入为空");
+        	}
+        	var subjectInfo = sumString.split("yuzhouwudi*1");
+        	/* for(e of subjectInfo) {
+        		var subject = e.split("yuzhouwudi*2");
+        		let subjectid = subject[0];
+        		let subjectTitle = subject[1];
+        		getGzzr(subjectTitle);
+        	} */
+        	iflength = subjectInfo.length;
+        	ifindex = 0;
+			digui(subjectInfo);
+        }
+        
+        var iflength;
+    	var ifindex;
+        function digui(subjectInfo){
+        	if(iflength > 1){
+        		var subject = subjectInfo[ifindex].split("yuzhouwudi*2");
+        		let subjectid = subject[0];
+        		let subjectTitle = subject[1];
+        		--iflength;
+        		++ifindex;
+        		getGzzr(subjectTitle,function(){digui(subjectInfo)},2);
+        	}
+        }
+        
+        totalIndex = 1;
+        function getGzzr(subjectTitle,fn,tag) {
+        	var url = "../subject/getTitleAndAnswerByTitle";
+			var param = {
+        			subjectTitle : subjectTitle
+        	};
+			var callback = function(data) {
+				var myContainer = $("#lastContainer");
+				var youContainer = $("#youContainer");
+				var answer = "数据库没有该题目";
+				if(!zfesUtil.isEmpty(data) && !zfesUtil.isEmpty(data.answer)){
+					answer = data.answer;
+				} 
+				if(!zfesUtil.isEmpty(data) && !zfesUtil.isEmpty(data.subjectTitle)){
+					subjectTitle = data.subjectTitle;
+				} 
+	        	var strVar = "";
+	        	strVar += "<div class=\"row\">\n";
+	        	if(tag == 2){
+	        		strVar += "		  <div class=\"col-sm-1 alert alert-info\"><p>" + totalIndex + "<\/p><\/div>\n";
+		        	totalIndex++;  	
+	        	} else {
+	        		strVar += "		  <div class=\"col-sm-1 alert alert-info\"><p><\/p><\/div>\n";
+	        	}
+	        	strVar += "		  <div class=\"col-sm-6 alert alert-info\"><p>" + subjectTitle + "<\/p><\/div>\n";
+	        	strVar += "		  <div class=\"col-sm-1 alert alert-warning\"><p>" + answer + "<\/p><\/div>\n";
+	        	if(!zfesUtil.isEmpty(data) && !zfesUtil.isEmpty(data.optionStringList)){
+					strVar += "		  <div class=\"col-sm-4 alert alert-primary\">";
+					for(option of data.optionStringList) {
+						strVar += "<p>" + option + "<\/p>";
+					}
+					strVar += "<\/div>\n";
+				} else {
+					strVar += "		  <div class=\"col-sm-4 alert alert-primary\"><p><\/p><\/div>\n";
+				}
+	            strVar += "		<\/div>\n";
+	            if(tag == 2){
+	            	myContainer.before(strVar);	
+	            } else {
+	            	youContainer.after(strVar);	
+	            }
+	        	fn();
+			}
+	        zfesAjax.ajax(url, param, callback);
+        }
+        
+        $("#howTo").click(function(){
+        	  $("#toDo").slideToggle();
+        	});
+    </script>
+</body>
+
+</html>
