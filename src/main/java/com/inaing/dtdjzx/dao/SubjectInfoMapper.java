@@ -25,5 +25,7 @@ public interface SubjectInfoMapper {
     int updateByPrimaryKey(SubjectInfo record);
     
     List<SubjectInfo> selectByPartTitle(String partTitle);
+
+	SubjectInfo getUsersSubject();
     
 }

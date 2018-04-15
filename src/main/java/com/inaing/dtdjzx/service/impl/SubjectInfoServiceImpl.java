@@ -119,7 +119,45 @@ public class SubjectInfoServiceImpl implements ISubjectInfoService{
 						optionInfoMapper.insert(optionInfo);	
 					}		
 				}
+			}else {
+				return;
 			}
+		}	
+	}
+	
+	@Override
+	public void changeSubjectInfo(Map<String, Object> params) {	
+		if(!ObjectUtils.isEmpty(params.get("subjectTitle"))) {
+			String subjectTitle = params.get("subjectTitle").toString();
+			SubjectInfo subjectInfo = subjectInfoMapper.selectBySubjectTitle(subjectTitle);
+			if(!ObjectUtils.isEmpty(params.get("subjectType"))) {
+				subjectInfo.setSubjecttype(Integer.parseInt((String) params.get("subjectType")));
+			}
+			subjectInfoMapper.updateByPrimaryKeySelective(subjectInfo);
+			Long id = subjectInfo.getId();
+			if(!ObjectUtils.isEmpty(params.get("optionLength"))) {
+				int optionLength = Integer.parseInt(params.get("optionLength").toString());
+				int i;
+				String optionTitle;
+				String isRight;
+				List<OptionInfo> optionInfos = optionInfoMapper.selectBySubjectId(id);
+				for(i = 0; i < optionLength; i++)
+				{
+					optionTitle = "optionInfoList[";
+					optionTitle += i;
+					optionTitle += "][optionTitle]";
+					isRight = "optionInfoList[";
+					isRight += i;
+					isRight += "][isRight]";
+					String eleTitle = (String) params.get(optionTitle);
+					for(OptionInfo optionInfo : optionInfos) {
+						if(optionInfo.getOptiontitle().toString().equals(eleTitle)) {
+							optionInfo.setIsright(Integer.parseInt(params.get(isRight).toString()));
+							optionInfoMapper.updateByPrimaryKeySelective(optionInfo);
+						}
+					}
+				}		
+			}		
 		}	
 	}
 
@@ -156,11 +194,27 @@ public class SubjectInfoServiceImpl implements ISubjectInfoService{
 		List<OptionInfo> optionInfoList = optionInfoMapper.selectBySubjectId(subjectId);
 		List<String> optionStringList = new ArrayList<String>();
 		for(OptionInfo o : optionInfoList) {
+			if(ObjectUtils.isEmpty(o.getIsright())) {
+				continue;
+			}
 			if(1 == o.getIsright()) {
 				optionStringList.add(o.getOptiontitle());
 			}
 		}
 		result.put("optionStringList", optionStringList);
+		return result;
+	}
+	
+	@Override
+	public Map<String, Object> getUsersSubject() {
+		Map<String, Object> result = new HashMap<String, Object>();
+		SubjectInfo subjectInfo = subjectInfoMapper.getUsersSubject();
+		result.put("subjectTitle", subjectInfo.getSubjecttitle());
+		Long subjectId = subjectInfo.getId();
+		int subjectType = subjectInfo.getSubjecttype();
+		result.put("subjectType", subjectType);
+		List<OptionInfo> optionInfoList = optionInfoMapper.selectBySubjectId(subjectId);
+		result.put("optionInfoList", optionInfoList);
 		return result;
 	}
 
@@ -176,4 +230,5 @@ public class SubjectInfoServiceImpl implements ISubjectInfoService{
 		}
 		return resList;
 	}
+
 }

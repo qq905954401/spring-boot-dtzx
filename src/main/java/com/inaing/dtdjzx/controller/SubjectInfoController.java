@@ -30,6 +30,18 @@ public class SubjectInfoController {
 		return null;
 	}
 	
+	@RequestMapping(value="/saveSubjectInfo", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    public @ResponseBody  Object loadOrders2(@RequestParam Map<String,Object> params, HttpServletRequest request){
+		iSubjectInfoService.saveSubjectInfo(params);
+		return null;
+	}
+	
+	@RequestMapping(value="/changeSubjectInfo", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    public @ResponseBody  Object changeSubjectInfo(@RequestParam Map<String,Object> params, HttpServletRequest request){
+		iSubjectInfoService.changeSubjectInfo(params);
+		return null;
+	}
+	
 	@RequestMapping(value="/getTitleAndAnswerByTitle", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public @ResponseBody  Object getTitleAndAnswerByTitle(@RequestParam Map<String,Object> params, HttpServletRequest request){
 		if(ObjectUtils.isEmpty(params.get("subjectTitle"))) {
@@ -60,5 +72,10 @@ public class SubjectInfoController {
 		}
 		String partTitle = params.get("partTitle").toString();
 		return iSubjectInfoService.getTitleByPartTitle(partTitle);
+	}
+	
+	@RequestMapping(value="/getUsersSubject", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    public @ResponseBody  Object getUsersSubject(@RequestParam Map<String,Object> params, HttpServletRequest request){
+		return iSubjectInfoService.getUsersSubject();
 	}
 }

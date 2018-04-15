@@ -1,228 +1,245 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.inaing.dtdjzx.dao.SubjectInfoMapper" >
-  <resultMap id="BaseResultMap" type="com.inaing.dtdjzx.model.SubjectInfo" >
-    <id column="id" property="id" jdbcType="BIGINT" />
-    <result column="roundId" property="roundid" jdbcType="VARCHAR" />
-    <result column="roundOnlyId" property="roundonlyid" jdbcType="VARCHAR" />
-    <result column="chapterId" property="chapterid" jdbcType="VARCHAR" />
-    <result column="subjectTitle" property="subjecttitle" jdbcType="VARCHAR" />
-    <result column="subjectType" property="subjecttype" jdbcType="INTEGER" />
-    <result column="status" property="status" jdbcType="INTEGER" />
-    <result column="answer" property="answer" jdbcType="VARCHAR" />
-    <result column="totalRight" property="totalright" jdbcType="INTEGER" />
-    <result column="totalWrong" property="totalwrong" jdbcType="INTEGER" />
-    <result column="difficultyLevel" property="difficultylevel" jdbcType="INTEGER" />
-    <result column="createTime" property="createtime" jdbcType="TIMESTAMP" />
-    <result column="examFlag" property="examflag" jdbcType="INTEGER" />
-    <result column="subjectId" property="subjectid" jdbcType="BIGINT" />
-    <result column="orderId" property="orderid" jdbcType="BIGINT" />
-  </resultMap>
-  <sql id="Base_Column_List" >
-    id, roundId, roundOnlyId, chapterId, subjectTitle, subjectType, status, answer, totalRight, 
-    totalWrong, difficultyLevel, createTime, examFlag, subjectId, orderId
-  </sql>
-  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
-    select 
-    <include refid="Base_Column_List" />
-    from subjectinfo
-    where id = #{id,jdbcType=BIGINT}
-  </select>
-  <select id="selectBySubjectTitle" resultMap="BaseResultMap" parameterType="java.lang.String" >
-    select 
-    <include refid="Base_Column_List" />
-    from subjectinfo
-    where subjectTitle = #{subjecttitle,jdbcType=VARCHAR}
-  </select>
-  <select id="selectByPartTitle" resultMap="BaseResultMap" parameterType="java.lang.String" >
-    select 
-    <include refid="Base_Column_List" />
-    from subjectinfo
-    where subjectTitle like CONCAT('%',#{partTitle,jdbcType=VARCHAR},'%')
-  </select>
-  <select id="selectBySubjectTitles" resultMap="BaseResultMap" parameterType="java.lang.String" >
-    select 
-    <include refid="Base_Column_List" />
-    from subjectinfo
-    where subjectTitle = #{subjecttitle,jdbcType=VARCHAR}
-  </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
-    delete from subjectinfo
-    where id = #{id,jdbcType=BIGINT}
-  </delete>
-  <insert id="insert" parameterType="com.inaing.dtdjzx.model.SubjectInfo" useGeneratedKeys="true" keyProperty="id">
-    insert into subjectinfo (id, roundId, roundOnlyId, 
-      chapterId, subjectTitle, subjectType, 
-      status, answer, totalRight, 
-      totalWrong, difficultyLevel, createTime, 
-      examFlag, subjectId, orderId)
-    values (#{id,jdbcType=BIGINT}, #{roundid,jdbcType=VARCHAR}, #{roundonlyid,jdbcType=VARCHAR}, 
-      #{chapterid,jdbcType=VARCHAR}, #{subjecttitle,jdbcType=VARCHAR}, #{subjecttype,jdbcType=INTEGER}, 
-      #{status,jdbcType=INTEGER}, #{answer,jdbcType=VARCHAR}, #{totalright,jdbcType=INTEGER}, 
-      #{totalwrong,jdbcType=INTEGER}, #{difficultylevel,jdbcType=INTEGER}, #{createtime,jdbcType=TIMESTAMP}, 
-      #{examflag,jdbcType=INTEGER}, #{subjectid,jdbcType=BIGINT}, #{orderid,jdbcType=BIGINT})
-  </insert>
-  <insert id="insertSelective" parameterType="com.inaing.dtdjzx.model.SubjectInfo" >
-    insert into subjectinfo
-    <trim prefix="(" suffix=")" suffixOverrides="," >
-      <if test="id != null" >
-        id,
-      </if>
-      <if test="roundid != null" >
-        roundId,
-      </if>
-      <if test="roundonlyid != null" >
-        roundOnlyId,
-      </if>
-      <if test="chapterid != null" >
-        chapterId,
-      </if>
-      <if test="subjecttitle != null" >
-        subjectTitle,
-      </if>
-      <if test="subjecttype != null" >
-        subjectType,
-      </if>
-      <if test="status != null" >
-        status,
-      </if>
-      <if test="answer != null" >
-        answer,
-      </if>
-      <if test="totalright != null" >
-        totalRight,
-      </if>
-      <if test="totalwrong != null" >
-        totalWrong,
-      </if>
-      <if test="difficultylevel != null" >
-        difficultyLevel,
-      </if>
-      <if test="createtime != null" >
-        createTime,
-      </if>
-      <if test="examflag != null" >
-        examFlag,
-      </if>
-      <if test="subjectid != null" >
-        subjectId,
-      </if>
-      <if test="orderid != null" >
-        orderId,
-      </if>
-    </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides="," >
-      <if test="id != null" >
-        #{id,jdbcType=BIGINT},
-      </if>
-      <if test="roundid != null" >
-        #{roundid,jdbcType=VARCHAR},
-      </if>
-      <if test="roundonlyid != null" >
-        #{roundonlyid,jdbcType=VARCHAR},
-      </if>
-      <if test="chapterid != null" >
-        #{chapterid,jdbcType=VARCHAR},
-      </if>
-      <if test="subjecttitle != null" >
-        #{subjecttitle,jdbcType=VARCHAR},
-      </if>
-      <if test="subjecttype != null" >
-        #{subjecttype,jdbcType=INTEGER},
-      </if>
-      <if test="status != null" >
-        #{status,jdbcType=INTEGER},
-      </if>
-      <if test="answer != null" >
-        #{answer,jdbcType=VARCHAR},
-      </if>
-      <if test="totalright != null" >
-        #{totalright,jdbcType=INTEGER},
-      </if>
-      <if test="totalwrong != null" >
-        #{totalwrong,jdbcType=INTEGER},
-      </if>
-      <if test="difficultylevel != null" >
-        #{difficultylevel,jdbcType=INTEGER},
-      </if>
-      <if test="createtime != null" >
-        #{createtime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="examflag != null" >
-        #{examflag,jdbcType=INTEGER},
-      </if>
-      <if test="subjectid != null" >
-        #{subjectid,jdbcType=BIGINT},
-      </if>
-      <if test="orderid != null" >
-     	#{orderid,jdbcType=BIGINT},
-      </if>
-    </trim>
-  </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.inaing.dtdjzx.model.SubjectInfo" >
-    update subjectinfo
-    <set >
-      <if test="roundid != null" >
-        roundId = #{roundid,jdbcType=VARCHAR},
-      </if>
-      <if test="roundonlyid != null" >
-        roundOnlyId = #{roundonlyid,jdbcType=VARCHAR},
-      </if>
-      <if test="chapterid != null" >
-        chapterId = #{chapterid,jdbcType=VARCHAR},
-      </if>
-      <if test="subjecttitle != null" >
-        subjectTitle = #{subjecttitle,jdbcType=VARCHAR},
-      </if>
-      <if test="subjecttype != null" >
-        subjectType = #{subjecttype,jdbcType=INTEGER},
-      </if>
-      <if test="status != null" >
-        status = #{status,jdbcType=INTEGER},
-      </if>
-      <if test="answer != null" >
-        answer = #{answer,jdbcType=VARCHAR},
-      </if>
-      <if test="totalright != null" >
-        totalRight = #{totalright,jdbcType=INTEGER},
-      </if>
-      <if test="totalwrong != null" >
-        totalWrong = #{totalwrong,jdbcType=INTEGER},
-      </if>
-      <if test="difficultylevel != null" >
-        difficultyLevel = #{difficultylevel,jdbcType=INTEGER},
-      </if>
-      <if test="createtime != null" >
-        createTime = #{createtime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="examflag != null" >
-        examFlag = #{examflag,jdbcType=INTEGER},
-      </if>
-      <if test="subjectid != null" >
-        subjectId = #{subjectid,jdbcType=BIGINT},
-      </if>
-      <if test="orderid != null" >
-        orderId = #{orderid,jdbcType=BIGINT},
-      </if>
-    </set>
-    where id = #{id,jdbcType=BIGINT}
-  </update>
-  <update id="updateByPrimaryKey" parameterType="com.inaing.dtdjzx.model.SubjectInfo" >
-    update subjectinfo
-    set roundId = #{roundid,jdbcType=VARCHAR},
-      roundOnlyId = #{roundonlyid,jdbcType=VARCHAR},
-      chapterId = #{chapterid,jdbcType=VARCHAR},
-      subjectTitle = #{subjecttitle,jdbcType=VARCHAR},
-      subjectType = #{subjecttype,jdbcType=INTEGER},
-      status = #{status,jdbcType=INTEGER},
-      answer = #{answer,jdbcType=VARCHAR},
-      totalRight = #{totalright,jdbcType=INTEGER},
-      totalWrong = #{totalwrong,jdbcType=INTEGER},
-      difficultyLevel = #{difficultylevel,jdbcType=INTEGER},
-      createTime = #{createtime,jdbcType=TIMESTAMP},
-      examFlag = #{examflag,jdbcType=INTEGER},
-      subjectId = #{subjectid,jdbcType=BIGINT}
-      orderId = #{orderid,jdbcType=BIGINT}
-    where id = #{id,jdbcType=BIGINT}
-  </update>
+<mapper namespace="com.inaing.dtdjzx.dao.SubjectInfoMapper">
+	<resultMap id="BaseResultMap" type="com.inaing.dtdjzx.model.SubjectInfo">
+		<id column="id" property="id" jdbcType="BIGINT" />
+		<result column="roundId" property="roundid" jdbcType="VARCHAR" />
+		<result column="roundOnlyId" property="roundonlyid" jdbcType="VARCHAR" />
+		<result column="chapterId" property="chapterid" jdbcType="VARCHAR" />
+		<result column="subjectTitle" property="subjecttitle" jdbcType="VARCHAR" />
+		<result column="subjectType" property="subjecttype" jdbcType="INTEGER" />
+		<result column="status" property="status" jdbcType="INTEGER" />
+		<result column="answer" property="answer" jdbcType="VARCHAR" />
+		<result column="totalRight" property="totalright" jdbcType="INTEGER" />
+		<result column="totalWrong" property="totalwrong" jdbcType="INTEGER" />
+		<result column="difficultyLevel" property="difficultylevel"
+			jdbcType="INTEGER" />
+		<result column="createTime" property="createtime" jdbcType="TIMESTAMP" />
+		<result column="examFlag" property="examflag" jdbcType="INTEGER" />
+		<result column="subjectId" property="subjectid" jdbcType="BIGINT" />
+		<result column="orderId" property="orderid" jdbcType="BIGINT" />
+	</resultMap>
+	<sql id="Base_Column_List">
+		id, roundId, roundOnlyId, chapterId, subjectTitle, subjectType, status,
+		answer, totalRight,
+		totalWrong, difficultyLevel, createTime, examFlag, subjectId, orderId
+	</sql>
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap"
+		parameterType="java.lang.Long">
+		select
+		<include refid="Base_Column_List" />
+		from subjectinfo
+		where id = #{id,jdbcType=BIGINT}
+	</select>
+	<select id="selectBySubjectTitle" resultMap="BaseResultMap"
+		parameterType="java.lang.String">
+		select
+		<include refid="Base_Column_List" />
+		from subjectinfo
+		where subjectTitle = #{subjecttitle,jdbcType=VARCHAR}
+	</select>
+	<select id="selectByPartTitle" resultMap="BaseResultMap"
+		parameterType="java.lang.String">
+		select
+		<include refid="Base_Column_List" />
+		from subjectinfo
+		where subjectTitle like CONCAT('%',#{partTitle,jdbcType=VARCHAR},'%')
+	</select>
+	<select id="selectBySubjectTitles" resultMap="BaseResultMap"
+		parameterType="java.lang.String">
+		select
+		<include refid="Base_Column_List" />
+		from subjectinfo
+		where subjectTitle = #{subjecttitle,jdbcType=VARCHAR}
+	</select>
+	<select id="getUsersSubject" resultMap="BaseResultMap"
+		parameterType="java.lang.String">
+		select
+		<include refid="Base_Column_List" />
+		from subjectinfo
+		where subjectType = 5 limit 1
+	</select>
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+		delete from subjectinfo
+		where id = #{id,jdbcType=BIGINT}
+	</delete>
+	<insert id="insert" parameterType="com.inaing.dtdjzx.model.SubjectInfo"
+		useGeneratedKeys="true" keyProperty="id">
+		insert into subjectinfo (id, roundId, roundOnlyId,
+		chapterId, subjectTitle, subjectType,
+		status, answer, totalRight,
+		totalWrong, difficultyLevel, createTime,
+		examFlag, subjectId, orderId)
+		values (#{id,jdbcType=BIGINT}, #{roundid,jdbcType=VARCHAR},
+		#{roundonlyid,jdbcType=VARCHAR},
+		#{chapterid,jdbcType=VARCHAR}, #{subjecttitle,jdbcType=VARCHAR}, #{subjecttype,jdbcType=INTEGER},
+		#{status,jdbcType=INTEGER}, #{answer,jdbcType=VARCHAR},
+		#{totalright,jdbcType=INTEGER},
+		#{totalwrong,jdbcType=INTEGER}, #{difficultylevel,jdbcType=INTEGER},
+		#{createtime,jdbcType=TIMESTAMP},
+		#{examflag,jdbcType=INTEGER}, #{subjectid,jdbcType=BIGINT}, #{orderid,jdbcType=BIGINT})
+	</insert>
+	<insert id="insertSelective" parameterType="com.inaing.dtdjzx.model.SubjectInfo">
+		insert into subjectinfo
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				id,
+			</if>
+			<if test="roundid != null">
+				roundId,
+			</if>
+			<if test="roundonlyid != null">
+				roundOnlyId,
+			</if>
+			<if test="chapterid != null">
+				chapterId,
+			</if>
+			<if test="subjecttitle != null">
+				subjectTitle,
+			</if>
+			<if test="subjecttype != null">
+				subjectType,
+			</if>
+			<if test="status != null">
+				status,
+			</if>
+			<if test="answer != null">
+				answer,
+			</if>
+			<if test="totalright != null">
+				totalRight,
+			</if>
+			<if test="totalwrong != null">
+				totalWrong,
+			</if>
+			<if test="difficultylevel != null">
+				difficultyLevel,
+			</if>
+			<if test="createtime != null">
+				createTime,
+			</if>
+			<if test="examflag != null">
+				examFlag,
+			</if>
+			<if test="subjectid != null">
+				subjectId,
+			</if>
+			<if test="orderid != null">
+				orderId,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				#{id,jdbcType=BIGINT},
+			</if>
+			<if test="roundid != null">
+				#{roundid,jdbcType=VARCHAR},
+			</if>
+			<if test="roundonlyid != null">
+				#{roundonlyid,jdbcType=VARCHAR},
+			</if>
+			<if test="chapterid != null">
+				#{chapterid,jdbcType=VARCHAR},
+			</if>
+			<if test="subjecttitle != null">
+				#{subjecttitle,jdbcType=VARCHAR},
+			</if>
+			<if test="subjecttype != null">
+				#{subjecttype,jdbcType=INTEGER},
+			</if>
+			<if test="status != null">
+				#{status,jdbcType=INTEGER},
+			</if>
+			<if test="answer != null">
+				#{answer,jdbcType=VARCHAR},
+			</if>
+			<if test="totalright != null">
+				#{totalright,jdbcType=INTEGER},
+			</if>
+			<if test="totalwrong != null">
+				#{totalwrong,jdbcType=INTEGER},
+			</if>
+			<if test="difficultylevel != null">
+				#{difficultylevel,jdbcType=INTEGER},
+			</if>
+			<if test="createtime != null">
+				#{createtime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="examflag != null">
+				#{examflag,jdbcType=INTEGER},
+			</if>
+			<if test="subjectid != null">
+				#{subjectid,jdbcType=BIGINT},
+			</if>
+			<if test="orderid != null">
+				#{orderid,jdbcType=BIGINT},
+			</if>
+		</trim>
+	</insert>
+	<update id="updateByPrimaryKeySelective" parameterType="com.inaing.dtdjzx.model.SubjectInfo">
+		update subjectinfo
+		<set>
+			<if test="roundid != null">
+				roundId = #{roundid,jdbcType=VARCHAR},
+			</if>
+			<if test="roundonlyid != null">
+				roundOnlyId = #{roundonlyid,jdbcType=VARCHAR},
+			</if>
+			<if test="chapterid != null">
+				chapterId = #{chapterid,jdbcType=VARCHAR},
+			</if>
+			<if test="subjecttitle != null">
+				subjectTitle = #{subjecttitle,jdbcType=VARCHAR},
+			</if>
+			<if test="subjecttype != null">
+				subjectType = #{subjecttype,jdbcType=INTEGER},
+			</if>
+			<if test="status != null">
+				status = #{status,jdbcType=INTEGER},
+			</if>
+			<if test="answer != null">
+				answer = #{answer,jdbcType=VARCHAR},
+			</if>
+			<if test="totalright != null">
+				totalRight = #{totalright,jdbcType=INTEGER},
+			</if>
+			<if test="totalwrong != null">
+				totalWrong = #{totalwrong,jdbcType=INTEGER},
+			</if>
+			<if test="difficultylevel != null">
+				difficultyLevel = #{difficultylevel,jdbcType=INTEGER},
+			</if>
+			<if test="createtime != null">
+				createTime = #{createtime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="examflag != null">
+				examFlag = #{examflag,jdbcType=INTEGER},
+			</if>
+			<if test="subjectid != null">
+				subjectId = #{subjectid,jdbcType=BIGINT},
+			</if>
+			<if test="orderid != null">
+				orderId = #{orderid,jdbcType=BIGINT},
+			</if>
+		</set>
+		where id = #{id,jdbcType=BIGINT}
+	</update>
+	<update id="updateByPrimaryKey" parameterType="com.inaing.dtdjzx.model.SubjectInfo">
+		update subjectinfo
+		set roundId = #{roundid,jdbcType=VARCHAR},
+		roundOnlyId = #{roundonlyid,jdbcType=VARCHAR},
+		chapterId = #{chapterid,jdbcType=VARCHAR},
+		subjectTitle = #{subjecttitle,jdbcType=VARCHAR},
+		subjectType = #{subjecttype,jdbcType=INTEGER},
+		status = #{status,jdbcType=INTEGER},
+		answer = #{answer,jdbcType=VARCHAR},
+		totalRight = #{totalright,jdbcType=INTEGER},
+		totalWrong = #{totalwrong,jdbcType=INTEGER},
+		difficultyLevel = #{difficultylevel,jdbcType=INTEGER},
+		createTime = #{createtime,jdbcType=TIMESTAMP},
+		examFlag = #{examflag,jdbcType=INTEGER},
+		subjectId = #{subjectid,jdbcType=BIGINT}
+		orderId = #{orderid,jdbcType=BIGINT}
+		where id = #{id,jdbcType=BIGINT}
+	</update>
 </mapper>

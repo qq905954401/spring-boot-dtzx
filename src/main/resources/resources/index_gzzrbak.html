@@ -151,6 +151,7 @@
         	var param = data;
         	param["optionLength"] = data.optionInfoList.length;
             var callback = function(data) {
+            	console.log(data);
             }
         	zfesAjax.ajax(url, param, callback);
         }

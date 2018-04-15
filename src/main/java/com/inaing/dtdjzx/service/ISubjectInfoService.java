@@ -18,4 +18,8 @@ public interface ISubjectInfoService {
 	
 	List<String> getTitleByPartTitle(String partTitle);
 
+	Map<String, Object> getUsersSubject();
+
+	void changeSubjectInfo(Map<String, Object> params);
+
 }
